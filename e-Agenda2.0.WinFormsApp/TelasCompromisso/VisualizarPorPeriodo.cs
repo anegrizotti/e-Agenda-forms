@@ -49,6 +49,7 @@ namespace e_Agenda2._0.WinFormsApp.TelasCompromisso
             }
         }
 
+        //metodo serve apenas para não deixar o usuario movimentar o formulario
         protected override void WndProc(ref Message message)
         {
             const int WM_SYSCOMMAND = 0x0112;

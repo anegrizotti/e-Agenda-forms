@@ -52,7 +52,7 @@ namespace e_Agenda2._0.WinFormsApp
 
             DialogResult resultado = tela.ShowDialog();
 
-            //confere se assunto e local não estão vazios e se o horário inputado esta no formado esperado "00:00"
+            //confere se assunto e local não estão vazios e se o horário inputado esta no formado esperado >>"00:00"
             if (resultado == DialogResult.OK &&
                 !String.IsNullOrEmpty(tela.Compromisso.Assunto) &&
                 !String.IsNullOrEmpty(tela.Compromisso.Local) &&
@@ -75,6 +75,7 @@ namespace e_Agenda2._0.WinFormsApp
                         }
                     }
 
+                    //se todas as verificações estiverem ok, inserir
                     repositorioCompromisso.Inserir(tela.Compromisso);
                     CarregarCompromissos();
                     return;
@@ -98,6 +99,9 @@ namespace e_Agenda2._0.WinFormsApp
 
             CadastroCompromisso tela = new CadastroCompromisso();
 
+            //verificando se o usuario selecionou um compromisso semanal ou futuro 
+
+            //se ele selecionou um semanal
             if (compromissoSemanal != null)
             {
                 tela.Compromisso = compromissoSemanal;
@@ -110,7 +114,8 @@ namespace e_Agenda2._0.WinFormsApp
                     CarregarCompromissos();
                 }
             }
-
+            
+            //se não se ele selecionou um futuro
             else if (compromissoFuturo != null)
             {
                 tela.Compromisso = compromissoFuturo;
@@ -141,11 +146,15 @@ namespace e_Agenda2._0.WinFormsApp
 
             if (resultado == DialogResult.OK)
             {
+                //verificando se o usuario selecionou um compromisso semanal ou futuro 
+
+                //se ele selecionou um futuro
                 if (compromissoFuturo != null)
                 {
                     repositorioCompromisso.Excluir(compromissoFuturo);
                     CarregarCompromissos();
                 }
+                //se não se ele selecionou um semanal
                 else if (compromissoSemanal != null)
                 {
                     repositorioCompromisso.Excluir(compromissoSemanal);
@@ -169,6 +178,7 @@ namespace e_Agenda2._0.WinFormsApp
             DialogResult resultado = tela.ShowDialog();
         }
 
+        //metodo serve apenas para não deixar o usuario movimentar o formulario
         protected override void WndProc(ref Message message)
         {
             const int WM_SYSCOMMAND = 0x0112;

@@ -49,13 +49,16 @@ namespace e_Agenda2._0.WinFormsApp
 
             DialogResult resultado = tela.ShowDialog();
 
+            //confere se telefone, email e nome não estão vazios
             if (resultado == DialogResult.OK && !String.IsNullOrEmpty(tela.Contato.Telefone)
                 && !String.IsNullOrEmpty(tela.Contato.Email) && !String.IsNullOrEmpty(tela.Contato.Nome))
             {
+                //valida email e telefone com regex
                 if (validar.TelefoneEstaValido(tela.Contato.Telefone) && validar.EmailEstaValido(tela.Contato.Email))
                 {
                     List<Contato> contatos = repositorioContato.SelecionarTodos();
 
+                    //verifica se existe um contato com o mesmo nome, email ou telefone
                     foreach(Contato contato in contatos)
                     {
                         if (tela.Contato.Telefone == contato.Telefone ||
@@ -67,6 +70,7 @@ namespace e_Agenda2._0.WinFormsApp
                         } 
                     }
 
+                    //se tudo estiver ok, insira
                     repositorioContato.Inserir(tela.Contato);
                     CarregarContatos();
                 }
@@ -125,6 +129,7 @@ namespace e_Agenda2._0.WinFormsApp
             {
                 List<Compromisso> compromissos = repositorioCompromisso.SelecionarCompromissoFuturo();
 
+                //verifica na lista de compromissos futuros se o contato escolhido para excluir está presente
                 foreach (Compromisso compromisso in compromissos)
                 {
                     if (compromisso.Contato.Nome == contatoSelecionado.Nome)
@@ -152,6 +157,7 @@ namespace e_Agenda2._0.WinFormsApp
             DialogResult resultado = tela.ShowDialog();
         }
 
+        //metodo serve apenas para não deixar o usuario movimentar o formulario
         protected override void WndProc(ref Message message)
         {
             const int WM_SYSCOMMAND = 0x0112;

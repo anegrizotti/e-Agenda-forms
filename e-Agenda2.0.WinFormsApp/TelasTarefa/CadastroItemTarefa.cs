@@ -21,8 +21,10 @@ namespace e_Agenda2._0.WinFormsApp
 
             this.tarefa = tarefa;
 
+            //passando a tarefa para a tela
             l_TarefaSelecionada.Text = tarefa.Titulo;
 
+            //passando os itens já cadastrados
             foreach (Item item in tarefa.Itens)
             {
                 lb_Itens.Items.Add(item);
@@ -69,6 +71,7 @@ namespace e_Agenda2._0.WinFormsApp
 
         }
 
+        //metodo serve apenas para não deixar o usuario movimentar o formulario
         protected override void WndProc(ref Message message)
         {
             const int WM_SYSCOMMAND = 0x0112;

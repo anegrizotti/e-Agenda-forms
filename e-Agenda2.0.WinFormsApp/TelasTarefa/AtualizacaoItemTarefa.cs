@@ -26,6 +26,7 @@ namespace e_Agenda2._0.WinFormsApp
             InitializeComponent();
             this.tarefa = tarefa;
 
+            //passando o titulo da tarefa para a tela
             l_Titulo.Text = tarefa.Titulo;
 
             CarregarItensTarefa(tarefa);
@@ -75,6 +76,7 @@ namespace e_Agenda2._0.WinFormsApp
             }
         }
 
+        //metodo serve apenas para não deixar o usuario movimentar o formulario
         protected override void WndProc(ref Message message)
         {
             const int WM_SYSCOMMAND = 0x0112;

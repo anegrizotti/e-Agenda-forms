@@ -62,6 +62,7 @@ namespace e_Agenda2._0.WinFormsApp
        
             foreach (Tarefa t in tarefasExistentes)
             {
+                //confere se a tarefa já não existe
                 if (t.Titulo == tela.Tarefa.Titulo)
                 {
                     MessageBox.Show("Esta tarefa já existe!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -73,6 +74,7 @@ namespace e_Agenda2._0.WinFormsApp
                 }
             }
 
+            //verifica se o titulo não é nulo
             if (resultado == DialogResult.OK && !String.IsNullOrEmpty(tela.Tarefa.Titulo))
             {
                 repositorioTarefa.Inserir(tela.Tarefa);
@@ -126,13 +128,16 @@ namespace e_Agenda2._0.WinFormsApp
             DialogResult resultado = MessageBox.Show("Deseja realmente excluir a tarefa?",
                 "Exclusão de Tarefas", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
+            //verifica se o usuario selecionou uma tarefa pendente ou excluida
             if (resultado == DialogResult.OK)
             {
+                //se selecionou pendente
                 if (tarefaSelecionadaPendente != null)
                 {
                     repositorioTarefa.Excluir(tarefaSelecionadaPendente);
                     CarregarTarefas();
                 }
+                //se não se selecionou concluida
                 else if (tarefaSelecionadaConcluida != null)
                 {
                     repositorioTarefa.Excluir(tarefaSelecionadaConcluida);
@@ -196,6 +201,8 @@ namespace e_Agenda2._0.WinFormsApp
             this.Close();
         }
 
+
+        //metodo serve apenas para não deixar o usuario movimentar o forms
         protected override void WndProc(ref Message message)
         {
             const int WM_SYSCOMMAND = 0x0112;

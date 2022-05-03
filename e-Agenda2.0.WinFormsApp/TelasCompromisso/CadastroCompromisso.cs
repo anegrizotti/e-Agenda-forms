@@ -24,6 +24,7 @@ namespace e_Agenda2._0.WinFormsApp.TelasCompromisso
             
             cb_Contato.Items.Clear();
 
+            //passando o contato (nome) para o combo box de contatos
             foreach (Contato c in contatos)
             {
                 cb_Contato.Items.Add(c.Nome);
@@ -63,6 +64,7 @@ namespace e_Agenda2._0.WinFormsApp.TelasCompromisso
             }
         }
 
+        //método que pega o objeto contato a partir do nome selecionado pelo usuario no combo box
         private Contato ReceberContato(string nome)
         {
             List<Contato> contatos = repositorioContato.SelecionarTodos();
@@ -91,6 +93,7 @@ namespace e_Agenda2._0.WinFormsApp.TelasCompromisso
             this.Close();
         }
 
+        //metódo serve apenas para não deixar o usuario movimentar o formulario
         protected override void WndProc(ref Message message)
         {
             const int WM_SYSCOMMAND = 0x0112;

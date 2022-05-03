@@ -29,8 +29,10 @@ namespace e_Agenda2._0.WinFormsApp.TelasContato
 
             cb_Cargos.Items.Clear();
 
+            //passando os cargos para o combo box
             foreach (Contato c in contatos)
             {
+                //se o cargo não for vazio e se ele ainda não esta no combo box, inserir
                 if (!String.IsNullOrEmpty(c.Cargo) && !cb_Cargos.Items.Contains(c.Cargo))
                     cb_Cargos.Items.Add(c.Cargo);
             }
@@ -67,6 +69,7 @@ namespace e_Agenda2._0.WinFormsApp.TelasContato
             this.Close();
         }
 
+        //metodo serve apenas para não deixar o usuario movimentar o formulario
         protected override void WndProc(ref Message message)
         {
             const int WM_SYSCOMMAND = 0x0112;

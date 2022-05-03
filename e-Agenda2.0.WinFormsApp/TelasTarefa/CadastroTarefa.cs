@@ -19,10 +19,12 @@ namespace e_Agenda2._0.WinFormsApp
         {
             InitializeComponent();
             
+            //settando o combo box
             cb_Prioridade.Items.Add("Alta");
             cb_Prioridade.Items.Add("Normal");
             cb_Prioridade.Items.Add("Baixa");
 
+            //combo box vai auto selecionar a prioridade 2 = Baixa
             cb_Prioridade.SelectedIndex = 2;
 
             tb_Numero.Text = "";
@@ -73,6 +75,7 @@ namespace e_Agenda2._0.WinFormsApp
             this.Close();
         }
 
+        //metodo serve apenas para não deixar o usuario movimentar o formulario
         protected override void WndProc(ref Message message)
         {
             const int WM_SYSCOMMAND = 0x0112;

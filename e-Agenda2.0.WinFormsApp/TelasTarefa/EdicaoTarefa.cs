@@ -21,10 +21,12 @@ namespace e_Agenda2._0.WinFormsApp.TelasTarefa
         {
             InitializeComponent();
 
+            //inserindo as prioridades no combo box
             cb_Prioridade.Items.Add("Alta");
             cb_Prioridade.Items.Add("Normal");
             cb_Prioridade.Items.Add("Baixa");
 
+            //vai inicializar com "Baixa" selecionado
             cb_Prioridade.SelectedIndex = 2;
         }
 
@@ -74,6 +76,7 @@ namespace e_Agenda2._0.WinFormsApp.TelasTarefa
             this.Close();
         }
 
+        //metodo serve apenas para não deixar o usuario movimentar o formulario
         protected override void WndProc(ref Message message)
         {
             const int WM_SYSCOMMAND = 0x0112;
