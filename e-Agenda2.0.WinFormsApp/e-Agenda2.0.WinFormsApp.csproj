@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>e_Agenda2._0.WinFormsApp</RootNamespace>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\e-Agenda2.0.Dominio\e-Agenda2.0.Dominio.csproj" />
+    <ProjectReference Include="..\e-Agenda2.0.Infra.Arquivos\e-Agenda2.0.Infra.Arquivos.csproj" />
+  </ItemGroup>
+
+</Project>
