@@ -52,6 +52,11 @@ namespace e_Agenda2._0.WinFormsApp
 
             DialogResult resultado = tela.ShowDialog();
 
+            if (resultado == DialogResult.Cancel)
+            {
+                return;
+            }
+
             //confere se assunto e local não estão vazios e se o horário inputado esta no formado esperado >>"00:00"
             if (resultado == DialogResult.OK &&
                 !String.IsNullOrEmpty(tela.Compromisso.Assunto) &&

@@ -49,6 +49,11 @@ namespace e_Agenda2._0.WinFormsApp
 
             DialogResult resultado = tela.ShowDialog();
 
+            if (resultado == DialogResult.Cancel)
+            {
+                return;
+            }
+
             //confere se telefone, email e nome não estão vazios
             if (resultado == DialogResult.OK && !String.IsNullOrEmpty(tela.Contato.Telefone)
                 && !String.IsNullOrEmpty(tela.Contato.Email) && !String.IsNullOrEmpty(tela.Contato.Nome))
@@ -74,7 +79,7 @@ namespace e_Agenda2._0.WinFormsApp
                     repositorioContato.Inserir(tela.Contato);
                     CarregarContatos();
                 }
-                else
+                else 
                 {
                     MessageBox.Show("Preencha os campos corretamente!", "Falha", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
