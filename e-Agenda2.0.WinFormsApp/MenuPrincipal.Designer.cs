@@ -134,7 +134,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(959, 860);
+            this.ClientSize = new System.Drawing.Size(958, 860);
             this.Controls.Add(this.btn_Sair);
             this.Controls.Add(this.lb_Contatos);
             this.Controls.Add(this.lb_Compromissos);

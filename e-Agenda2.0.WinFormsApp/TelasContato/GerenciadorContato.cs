@@ -110,6 +110,17 @@ namespace e_Agenda2._0.WinFormsApp
             if (resultado == DialogResult.OK)
             {
                 repositorioContato.Editar(tela.Contato);
+
+                List<Compromisso> compromissos = repositorioCompromisso.SelecionarTodos();
+
+                foreach (Compromisso compromisso in compromissos)
+                {
+                    if (compromisso.Contato.Nome.Equals(contatoSelecionado.Nome))
+                    {
+                        compromisso.Contato = contatoSelecionado;
+                    }
+                }
+
                 CarregarContatos();
             }
 
