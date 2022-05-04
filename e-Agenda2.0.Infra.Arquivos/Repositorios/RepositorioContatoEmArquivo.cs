@@ -9,47 +9,45 @@ namespace e_Agenda2._0.Infra.Arquivos
 {
     public class RepositorioContatoEmArquivo : IRepositorioContato
     {
-        private readonly ISerializadorContatos serializador;
-        List<Contato> contatos;
+        private readonly ISerializador serializador;
+        private readonly DataContext dataContext;
 
-        public RepositorioContatoEmArquivo(ISerializadorContatos serializador)
+        public RepositorioContatoEmArquivo(ISerializador serializador, DataContext dataContext)
         {
+            this.dataContext = dataContext;
             this.serializador = serializador;
 
-            contatos = serializador.CarregarContatosDoArquivo();
+            dataContext.Contatos.AddRange(serializador.CarregarDadosDoArquivo().Contatos);
         }
 
         public List<Contato> SelecionarTodos()
         {
-            return contatos;
+            return dataContext.Contatos;
         }
 
         public void Inserir(Contato novoContato)
         {
-            contatos.Add(novoContato);
-
-            serializador.GravarContatosEmArquivo(contatos);
+            dataContext.Contatos.Add(novoContato);
+            serializador.GravarDadosEmArquivo(dataContext);
         }
 
         public void Editar(Contato contato)
         {
-            foreach (var item in contatos)
+            foreach (var item in dataContext.Contatos)
             {
                 if (item.Telefone == contato.Telefone)
                 {
                     item.Telefone = contato.Telefone;
+                    serializador.GravarDadosEmArquivo(dataContext);
                     break;
                 }
             }
-
-            serializador.GravarContatosEmArquivo(contatos);
         }
 
         public void Excluir(Contato contato)
         {
-            contatos.Remove(contato);
-
-            serializador.GravarContatosEmArquivo(contatos);
+            dataContext.Contatos.Remove(contato);
+            serializador.GravarDadosEmArquivo(dataContext);
         }
 
     }

@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using e_Agenda2._0.Dominio;
 using e_Agenda2._0.Dominio.ModuloCompromisso;
+using e_Agenda2._0.Dominio.ModuloContato;
 using e_Agenda2._0.Infra.Arquivos;
-using e_Agenda2._0.Infra.Arquivos.SerializaçãoEmJson;
+using e_Agenda2._0.Infra.Arquivos.SerializadorJsonDotnet;
 using e_Agenda2._0.WinFormsApp.TelasCompromisso;
 
 namespace e_Agenda2._0.WinFormsApp
 {
     public partial class GerenciadorCompromisso : Form
     {
-        private IRepositorioCompromisso repositorioCompromisso;
-        private Validar validar = new Validar();
+        IRepositorioCompromisso repositorioCompromisso;
+        IRepositorioContato repositorioContato;
+        private Validar validar;
 
-        public GerenciadorCompromisso()
+        public GerenciadorCompromisso(IRepositorioCompromisso repositorioCompromisso, IRepositorioContato repositorioContato)
         {
-            SerializacaoDeCompromissosEmJsonDotnet serializador = new SerializacaoDeCompromissosEmJsonDotnet();
+            this.repositorioCompromisso = repositorioCompromisso;
+            this.repositorioContato = repositorioContato;
 
-            repositorioCompromisso = new RepositorioCompromissoEmArquivo(serializador);
+            validar = new Validar();
 
             InitializeComponent();
             CarregarCompromissos();
@@ -47,7 +50,7 @@ namespace e_Agenda2._0.WinFormsApp
 
         private void btn_Inserir_Click(object sender, EventArgs e)
         {
-            CadastroCompromisso tela = new CadastroCompromisso();
+            CadastroCompromisso tela = new CadastroCompromisso(repositorioContato);
             tela.Compromisso = new Compromisso();
 
             DialogResult resultado = tela.ShowDialog();
@@ -102,7 +105,7 @@ namespace e_Agenda2._0.WinFormsApp
                 return;
             }
 
-            CadastroCompromisso tela = new CadastroCompromisso();
+            CadastroCompromisso tela = new CadastroCompromisso(repositorioContato);
 
             //verificando se o usuario selecionou um compromisso semanal ou futuro 
 
@@ -177,7 +180,7 @@ namespace e_Agenda2._0.WinFormsApp
 
         private void btn_VisualizarPeriodo_Click(object sender, EventArgs e)
         {
-            VisualizarPorPeriodo tela = new VisualizarPorPeriodo();
+            VisualizarPorPeriodo tela = new VisualizarPorPeriodo(repositorioCompromisso);
             tela.Compromisso = new Compromisso();
 
             DialogResult resultado = tela.ShowDialog();

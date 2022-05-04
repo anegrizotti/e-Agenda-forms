@@ -9,21 +9,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using e_Agenda2._0.Dominio.ModuloCompromisso;
 using e_Agenda2._0.Infra.Arquivos;
-using e_Agenda2._0.Infra.Arquivos.SerializaçãoEmJson;
+using e_Agenda2._0.Infra.Arquivos.SerializadorJsonDotnet;
 
 namespace e_Agenda2._0.WinFormsApp.TelasCompromisso
 {
     public partial class VisualizarPorPeriodo : Form
     {
         private Compromisso compromisso;
-        private IRepositorioCompromisso repositorioCompromisso;
+        IRepositorioCompromisso repositorioCompromisso;
 
-        public VisualizarPorPeriodo()
+        public VisualizarPorPeriodo(IRepositorioCompromisso repositorioCompromisso)
         {
+            this.repositorioCompromisso = repositorioCompromisso;
             InitializeComponent();
 
-            SerializacaoDeCompromissosEmJsonDotnet serializadorCompromisso = new SerializacaoDeCompromissosEmJsonDotnet();
-            repositorioCompromisso = new RepositorioCompromissoEmArquivo(serializadorCompromisso);
         }
 
         public Compromisso Compromisso

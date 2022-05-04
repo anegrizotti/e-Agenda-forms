@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using e_Agenda2._0.Dominio.ModuloContato;
 using e_Agenda2._0.Infra.Arquivos;
-using e_Agenda2._0.Infra.Arquivos.SerializaçãoEmJson;
-
+using e_Agenda2._0.Infra.Arquivos.SerializadorJsonDotnet;
 namespace e_Agenda2._0.WinFormsApp.TelasContato
 {
     public partial class VisualizarPorCargo : Form
@@ -18,12 +17,11 @@ namespace e_Agenda2._0.WinFormsApp.TelasContato
         private Contato contato;
         private IRepositorioContato repositorioContato;
 
-        public VisualizarPorCargo()
+        public VisualizarPorCargo(IRepositorioContato repositorioContato)
         {
             InitializeComponent();
-
-            SerializacaoDeContatosEmJsonDotnet serializadorContato = new SerializacaoDeContatosEmJsonDotnet();
-            repositorioContato = new RepositorioContatoEmArquivo(serializadorContato);
+            
+            this.repositorioContato = repositorioContato;
 
             List<Contato> contatos = repositorioContato.SelecionarTodos();
 

@@ -4,21 +4,19 @@ using System.Windows.Forms;
 using e_Agenda2._0.Dominio.ModuloCompromisso;
 using e_Agenda2._0.Dominio.ModuloContato;
 using e_Agenda2._0.Infra.Arquivos;
-using e_Agenda2._0.Infra.Arquivos.SerializaçãoEmJson;
-
+using e_Agenda2._0.Infra.Arquivos.SerializadorJsonDotnet;
 namespace e_Agenda2._0.WinFormsApp.TelasCompromisso
 {
     public partial class CadastroCompromisso : Form
     {
+        IRepositorioContato repositorioContato;
         private Compromisso compromisso;
-        private IRepositorioContato repositorioContato;
 
-        public CadastroCompromisso()
+        public CadastroCompromisso(IRepositorioContato repositorioContato)
         {
             InitializeComponent();
-
-            SerializacaoDeContatosEmJsonDotnet serializadorContato = new SerializacaoDeContatosEmJsonDotnet();
-            repositorioContato = new RepositorioContatoEmArquivo(serializadorContato);
+            
+            this.repositorioContato = repositorioContato;
 
             List<Contato> contatos = repositorioContato.SelecionarTodos();
             

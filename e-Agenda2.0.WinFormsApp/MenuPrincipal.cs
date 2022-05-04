@@ -5,7 +5,7 @@ using e_Agenda2._0.Dominio.ModuloCompromisso;
 using e_Agenda2._0.Dominio.ModuloContato;
 using e_Agenda2._0.Dominio.ModuloTarefa;
 using e_Agenda2._0.Infra.Arquivos;
-using e_Agenda2._0.Infra.Arquivos.SerializaçãoEmJson;
+using e_Agenda2._0.Infra.Arquivos.SerializadorJsonDotnet;
 
 namespace e_Agenda2._0.WinFormsApp
 {
@@ -17,13 +17,13 @@ namespace e_Agenda2._0.WinFormsApp
 
         public MenuPrincipal()
         {
-            SerializacaoDeTarefasEmJsonDotnet serializadorTarefa = new SerializacaoDeTarefasEmJsonDotnet();
-            SerializacaoDeContatosEmJsonDotnet serializadorContato = new SerializacaoDeContatosEmJsonDotnet();
-            SerializacaoDeCompromissosEmJsonDotnet serializadorCompromisso = new SerializacaoDeCompromissosEmJsonDotnet();
+            ISerializador serializador = new SerializadorDadosJsonDotnet();
 
-            repositorioTarefa = new RepositorioTarefaEmArquivo(serializadorTarefa);
-            repositorioContato = new RepositorioContatoEmArquivo(serializadorContato);
-            repositorioCompromisso = new RepositorioCompromissoEmArquivo(serializadorCompromisso);
+            DataContext contextoDados = new DataContext();
+
+            repositorioTarefa = new RepositorioTarefaEmArquivo(serializador, contextoDados);
+            repositorioContato = new RepositorioContatoEmArquivo(serializador, contextoDados);
+            repositorioCompromisso = new RepositorioCompromissoEmArquivo(serializador, contextoDados);
 
             InitializeComponent();
 
@@ -71,21 +71,21 @@ namespace e_Agenda2._0.WinFormsApp
 
         private void btn_GerenciarTarefas_Click(object sender, EventArgs e)
         {
-            GerenciadorTarefa tela = new GerenciadorTarefa();
+            GerenciadorTarefa tela = new GerenciadorTarefa(repositorioTarefa);
             tela.Show();
 
         }
 
         private void btn_GerenciarCompromissos_Click(object sender, EventArgs e)
         {
-            GerenciadorCompromisso tela = new GerenciadorCompromisso();
+            GerenciadorCompromisso tela = new GerenciadorCompromisso(repositorioCompromisso, repositorioContato);
             tela.Show();
 
         }
 
         private void btn_GerenciarContatos_Click(object sender, EventArgs e)
         {
-            GerenciadorContato tela = new GerenciadorContato();
+            GerenciadorContato tela = new GerenciadorContato(repositorioContato, repositorioCompromisso);
             tela.Show();
 
         }

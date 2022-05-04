@@ -9,64 +9,60 @@ namespace e_Agenda2._0.Infra.Arquivos
 {
     public class RepositorioCompromissoEmArquivo : IRepositorioCompromisso
     {
-        private readonly ISerializadorCompromissos serializador;
-        List<Compromisso> compromissos;
+        private readonly ISerializador serializador;
+        private readonly DataContext dataContext;
 
-        public RepositorioCompromissoEmArquivo(ISerializadorCompromissos serializador)
+        public RepositorioCompromissoEmArquivo(ISerializador serializador, DataContext dataContext)
         {
+            this.dataContext = dataContext;
             this.serializador = serializador;
 
-            compromissos = serializador.CarregarCompromissosDoArquivo();
-
-
+            dataContext.Compromissos.AddRange(serializador.CarregarDadosDoArquivo().Compromissos);
         }
 
         public void Editar(Compromisso compromisso)
         {
-            foreach (var item in compromissos)
+            foreach (var item in dataContext.Compromissos)
             {
                 if (item.Assunto == compromisso.Assunto)
                 {
                     item.Assunto = compromisso.Assunto;
+                    serializador.GravarDadosEmArquivo(dataContext);
                     break;
                 }
             }
-
-            serializador.GravarCompromissosEmArquivo(compromissos);
         }
 
         public void Excluir(Compromisso compromisso)
         {
-            compromissos.Remove(compromisso);
-
-            serializador.GravarCompromissosEmArquivo(compromissos);
+            dataContext.Compromissos.Remove(compromisso);
+            serializador.GravarDadosEmArquivo(dataContext);
         }
 
         public void Inserir(Compromisso novoCompromisso)
         {
-            compromissos.Add(novoCompromisso);
-
-            serializador.GravarCompromissosEmArquivo(compromissos);
+            dataContext.Compromissos.Add(novoCompromisso);
+            serializador.GravarDadosEmArquivo(dataContext);
         }
 
         public List<Compromisso> SelecionarCompromissoPassado()
         {
-            return compromissos.Where(x => x.DataCompromisso < DateTime.Today).ToList();
+            return dataContext.Compromissos.Where(x => x.DataCompromisso < DateTime.Today).ToList();
         }
 
         public List<Compromisso> SelecionarCompromissoFuturo()
         {
-            return compromissos.Where(x => x.DataCompromisso > DateTime.Today).ToList();
+            return dataContext.Compromissos.Where(x => x.DataCompromisso > DateTime.Today).ToList();
         }
 
         public List<Compromisso> SelecionarTodos()
         {
-            return compromissos;
+            return dataContext.Compromissos;
         }
 
         public List<Compromisso> SelecionarCompromissoPorPeriodo(DateTime dataInicio, DateTime dataTermino)
         {
-            return compromissos.Where(x => x.DataCompromisso >= dataInicio && x.DataCompromisso <= dataTermino).ToList();
+            return dataContext.Compromissos.Where(x => x.DataCompromisso >= dataInicio && x.DataCompromisso <= dataTermino).ToList();
         }
 
     }

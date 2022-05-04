@@ -6,7 +6,7 @@ using e_Agenda2._0.Dominio;
 using e_Agenda2._0.Dominio.ModuloCompromisso;
 using e_Agenda2._0.Dominio.ModuloContato;
 using e_Agenda2._0.Infra.Arquivos;
-using e_Agenda2._0.Infra.Arquivos.SerializaçãoEmJson;
+using e_Agenda2._0.Infra.Arquivos.SerializadorJsonDotnet;
 using e_Agenda2._0.WinFormsApp.TelasContato;
 
 namespace e_Agenda2._0.WinFormsApp
@@ -15,15 +15,14 @@ namespace e_Agenda2._0.WinFormsApp
     {
         private IRepositorioContato repositorioContato;
         private IRepositorioCompromisso repositorioCompromisso;
-        private Validar validar = new Validar();
+        private Validar validar;
 
-        public GerenciadorContato()
+        public GerenciadorContato(IRepositorioContato repositorioContato, IRepositorioCompromisso repositorioCompromisso)
         {
-            SerializacaoDeContatosEmJsonDotnet serializadorContato = new SerializacaoDeContatosEmJsonDotnet();
-            SerializacaoDeCompromissosEmJsonDotnet serializadorCompromisso = new SerializacaoDeCompromissosEmJsonDotnet();
+            this.repositorioContato = repositorioContato;
+            this.repositorioCompromisso = repositorioCompromisso;
 
-            repositorioContato = new RepositorioContatoEmArquivo(serializadorContato);
-            repositorioCompromisso = new RepositorioCompromissoEmArquivo(serializadorCompromisso);
+            validar = new Validar();
 
             InitializeComponent();
             CarregarContatos();
@@ -157,7 +156,7 @@ namespace e_Agenda2._0.WinFormsApp
 
         private void btn_VisualizarCargo_Click(object sender, EventArgs e)
         {
-            VisualizarPorCargo tela = new VisualizarPorCargo();
+            VisualizarPorCargo tela = new VisualizarPorCargo(repositorioContato);
 
             DialogResult resultado = tela.ShowDialog();
         }

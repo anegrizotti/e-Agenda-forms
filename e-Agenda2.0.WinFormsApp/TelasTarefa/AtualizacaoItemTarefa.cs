@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using e_Agenda2._0.Dominio.ModuloTarefa;
 using e_Agenda2._0.Infra.Arquivos;
-using e_Agenda2._0.Infra.Arquivos.SerializaçãoEmJson;
+using e_Agenda2._0.Infra.Arquivos.SerializadorJsonDotnet;
 
 namespace e_Agenda2._0.WinFormsApp
 {
@@ -18,10 +18,9 @@ namespace e_Agenda2._0.WinFormsApp
         private readonly Tarefa tarefa;
         private IRepositorioTarefa repositorioTarefa;
 
-        public AtualizacaoItemTarefa(Tarefa tarefa)
+        public AtualizacaoItemTarefa(Tarefa tarefa, IRepositorioTarefa repositorioTarefa)
         {
-            SerializacaoDeTarefasEmJsonDotnet serializadorTarefa = new SerializacaoDeTarefasEmJsonDotnet();
-            repositorioTarefa = new RepositorioTarefaEmArquivo(serializadorTarefa);
+            this.repositorioTarefa = repositorioTarefa;
 
             InitializeComponent();
             this.tarefa = tarefa;

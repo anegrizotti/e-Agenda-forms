@@ -10,20 +10,18 @@ using System.Windows.Forms;
 using e_Agenda2._0.Dominio;
 using e_Agenda2._0.Dominio.ModuloTarefa;
 using e_Agenda2._0.Infra.Arquivos;
-using e_Agenda2._0.Infra.Arquivos.SerializaçãoEmJson;
+using e_Agenda2._0.Infra.Arquivos.SerializadorJsonDotnet;
 using e_Agenda2._0.WinFormsApp.TelasTarefa;
 
 namespace e_Agenda2._0.WinFormsApp
 {
     public partial class GerenciadorTarefa : Form
     {
-        private IRepositorioTarefa repositorioTarefa;
+        IRepositorioTarefa repositorioTarefa;
 
-        public GerenciadorTarefa()
+        public GerenciadorTarefa(IRepositorioTarefa repositorioTarefa)
         {
-            SerializacaoDeTarefasEmJsonDotnet serializador = new SerializacaoDeTarefasEmJsonDotnet();
-
-            repositorioTarefa = new RepositorioTarefaEmArquivo(serializador);
+            this.repositorioTarefa = repositorioTarefa;
 
             InitializeComponent();
             CarregarTarefas();
@@ -183,7 +181,7 @@ namespace e_Agenda2._0.WinFormsApp
                 return;
             }
 
-            AtualizacaoItemTarefa tela = new AtualizacaoItemTarefa(tarefaSelecionada);
+            AtualizacaoItemTarefa tela = new AtualizacaoItemTarefa(tarefaSelecionada, repositorioTarefa);
 
             if (tela.ShowDialog() == DialogResult.OK)
             {
